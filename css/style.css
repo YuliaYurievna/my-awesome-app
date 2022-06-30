@@ -5,11 +5,15 @@
 
 body {
   font-family: 'Tiro Devanagari Marathi', serif;
-  color: rgba(34, 22, 58, 0.894);
+  color: rgba(51, 51, 53, 0.894);
 }
 
 a {
   text-decoration: none;
+}
+
+li::first-letter {
+  text-transform: capitalize;
 }
 
 #background-img {
@@ -31,11 +35,11 @@ a {
 }
 
 .weather-app {
-  background-color: rgb(252, 236, 247);
+  background-color: rgba(249, 216, 239, 0.935);
   margin: 60px auto 15px;
   padding: 20px;
   z-index: 5;
-  border: 3px solid rgba(244, 244, 246, 0.905);
+  border: 3px solid rgba(253, 253, 254, 0.366);
 }
 
 .weather-details,
@@ -51,8 +55,17 @@ a {
 
 .date-now {
   font-family: 'Noto Serif', serif;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
+}
+
+.weather-temperature .active {
+  color: rgb(33, 33, 33);
+  cursor: default;
+}
+
+.weather-temperature .active:hover {
+  text-align: none;
 }
 
 .degrees {
@@ -64,8 +77,6 @@ a {
   top: -25px;
 }
 
-.forecast-icon-now {
-  position: relative;
+/* .forecast-icon-now {
   top: 14px;
-  font-size: 40px;
-}
+} */

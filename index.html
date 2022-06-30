@@ -28,33 +28,31 @@
 				<div class="current-city">
 					<div class="row ml-2">
 						<div class="col-6">
-							<h2 class="searched-city mb-3" id="city">
+							<h2 class="searched-city mb-2" id="city">
 								Kharkiv
 							</h2>
-							<p class="date-now mb-2" id="date">
-								<span class="date">Thusday</span> | 14:14
+							<p class="date-now mb-2">
+								<span id="date">Thusday | 14:14</span>
 							</p>
 							<ul class="weather-details list-unstyled">
 								<li class="weather-details-list">Humidity: <span id="humidity">31</span>%</li>
 								<li class="weather-details-list">Wind: <span id="wind">6</span> km/h</li>
+								<li class="weather-details-list" id="description">Clouds</li>
 							</ul>
 						</div>
 						<div class="col-3 text-center pr-0 pt-4">
-							<div class="temperature">
+							<div class="weather-temperature">
 								<strong class="degrees" id="temperature">
 									25
 								</strong>
 								<span class="units">
-									<a href="#" class="celcium-link">°C</a> |
-									<a href="#" class="farenheit-link">°F</a>
+									<a href="#" id="celcius-link" class="active">°C</a> |
+									<a href="#" id="fahrenheit-link">°F</a>
 								</span>
 							</div>
 						</div>
-						<div class="col-3 p-0 pt-4">
-							<div class="forecast-icon-now">
-								<i class="bi bi-cloud-sun-fill"></i>
-							</div>
-							<p class="weather-description mt-3" id="description">Clouds</p>
+						<div class="col-3 p-0 pt-4 forecast-icon-now">
+							<img src="" class="forecast-icon-now" id="icon">
 						</div>
 					</div>
 				</div>
