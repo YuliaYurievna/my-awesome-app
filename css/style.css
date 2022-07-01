@@ -5,7 +5,7 @@
 
 body {
   font-family: 'Tiro Devanagari Marathi', serif;
-  color: rgba(51, 51, 53, 0.894);
+  color: rgba(28, 4, 64, 0.697);
 }
 
 a {
@@ -23,7 +23,7 @@ li::first-letter {
   max-width: 100%;
   min-height: 100%;
   z-index: -5;
-  opacity: 0.7;
+  opacity: 0.60;
   background-repeat: repeat;
   background-position: center;
   background-size: cover;
@@ -35,22 +35,17 @@ li::first-letter {
 }
 
 .weather-app {
-  background-color: rgba(249, 216, 239, 0.935);
+  /* background-color: rgba(249, 216, 239, 0.935); */
+  background: linear-gradient(rgba(254, 222, 254, 0.675), rgba(255, 255, 255, 0.791) 90%);
   margin: 60px auto 15px;
   padding: 20px;
   z-index: 5;
-  border: 3px solid rgba(253, 253, 254, 0.366);
+  box-shadow: 5px 5px 10px rgba(72, 72, 72, 0.343);
 }
 
 .weather-details,
 .weather-description {
   font-size: 14px;
-}
-
-.searced-city {
-  font-weight: bold;
-  font-family: 'Noto Serif', serif;
-  color: rgba(150, 70, 225, 0.736);
 }
 
 .date-now {
@@ -62,6 +57,15 @@ li::first-letter {
 .weather-temperature .active {
   color: rgb(33, 33, 33);
   cursor: default;
+}
+
+.date-now {
+  color: rgba(66, 19, 113, 0.701);
+  font-size: 14px;
+}
+
+.weather-details-list {
+  color: rgba(94, 24, 164, 0.701);
 }
 
 .weather-temperature .active:hover {
@@ -77,6 +81,15 @@ li::first-letter {
   top: -25px;
 }
 
-/* .forecast-icon-now {
-  top: 14px;
-} */
+.weather-elements {
+  background: linear-gradient(rgba(251, 251, 251, 0.502), rgba(142, 117, 211, 0.816));
+  box-shadow: 3px 5px 5px rgba(72, 72, 72, 0.187);
+}
+
+.weather-forecast-temperatures {
+  font-size: 14px;
+}
+
+.weather-forecast-temperature-min {
+  color: rgba(255, 255, 255, 0.613);
+}
