@@ -22,10 +22,6 @@ function formatDate(date) {
   return `${day} | ${hours}:${minutes}`;
 }
 
-let dateElement = document.querySelector('#date');
-let currentTime = new Date();
-dateElement.innerHTML = formatDate(currentTime);
-
 function formatDay(timestamp) {
   let date = new Date(timestamp * 1000);
   let day = date.getDay();
@@ -45,21 +41,13 @@ function displayForecast(response) {
         forecastHTML +
         `
         <div class="col-2 card pt-2 pb-2 weather-elements">
-          <div class="weather-forecast-date">
-          ${formatDay(forecastDay.dt)}
-          </div>
+          <div class="weather-forecast-date">${formatDay(forecastDay.dt)}</div>
           <div class="forecast-icon mt-1 mb-1">
-            <img src="http://openweathermap.org/img/wn/${
-              forecastDay.weather[0].icon
-            }@2x.png" alt="" width="44">
+            <img src="http://openweathermap.org/img/wn/${forecastDay.weather[0].icon}@2x.png" alt="" width="44">
           </div>
           <div class="weather-forecast-temperatures">
-            <span class="weather-forecast-temperature-max">
-            ${Math.round(forecastDay.temp.max)}°
-            </span>
-            <span class="weather-forecast-temperature-min">
-            ${Math.round(forecastDay.temp.min)}°
-            </span>
+            <span class="weather-forecast-temperature-max">${Math.round(forecastDay.temp.max)}°</span>
+            <span class="weather-forecast-temperature-min">${Math.round(forecastDay.temp.min)}°</span>
           </div>
         </div>
       `;
@@ -83,22 +71,14 @@ function displayWeatherCondition(response) {
 
   celsiusTemperature = response.data.main.temp;
 
-  document.querySelector('#temperature').innerHTML = Math.round(
-    response.data.main.temp
-  );
-  document.querySelector('#humidity').innerHTML =
-    response.data.main.humidity;
-  document.querySelector('#wind').innerHTML = Math.round(
-    response.data.wind.speed
-  );
-  document.querySelector('#description').innerHTML =
-    response.data.weather[0].description;
-  document
-    .querySelector('#icon')
-    .setAttribute(
-      'src',
-      `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-    );
+  document.querySelector('#temperature').innerHTML = Math.round(response.data.main.temp);
+  document.querySelector('#humidity').innerHTML = response.data.main.humidity;
+  document.querySelector('#wind').innerHTML = `${Math.round(response.data.wind.speed)} km/h`;
+
+  windMetric = Math.round(response.data.wind.speed);
+
+  document.querySelector('#description').innerHTML = response.data.weather[0].description;
+  document.querySelector('#icon').setAttribute('src', `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
 
   getForecast(response.data.coord);
 }
@@ -116,9 +96,6 @@ function handleSubmit(event) {
   searchedCity(city);
 }
 
-let searchForm = document.querySelector('#search-form');
-searchForm.addEventListener('submit', handleSubmit);
-
 function searchLocation(position) {
   let apiKey = '98f5a37ff9ffddbb3334ee960c2d442a';
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`;
@@ -131,36 +108,83 @@ function getCurrentLocation(event) {
   navigator.geolocation.getCurrentPosition(searchLocation);
 }
 
-let currentLocationButton = document.querySelector(
-  '#current-location-button'
-);
-currentLocationButton.addEventListener('click', getCurrentLocation);
-
 function displayFahrenheitTemperature(event) {
   event.preventDefault();
+  
   let temperatureElement = document.querySelector('#temperature');
-  celsiusLink.classList.remove('active');
-  fahrenheitLink.classList.add('active');
   let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
   temperatureElement.innerHTML = Math.round(fahrenheitTemperature);
+  let windElement = document.querySelector('#wind');
+  let windImperial = windMetric * 0.62137;
+  windElement.innerHTML = `${Math.round(windImperial)} mph`;
+  celsiusLink.classList.remove('active');
+  fahrenheitLink.classList.add('active');
+
+  if (isCelsius){
+    let temperatureMax = document.querySelectorAll('.weather-forecast-temperature-max');
+    let temperatureMin = document.querySelectorAll('.weather-forecast-temperature-min');
+    for (let i = 0; i < temperatureMax.length; i++) {
+      let temperatureFahrenheitMax = (parseInt(temperatureMax[i].innerText) * 9) / 5 + 32;
+      temperatureMax[i].innerHTML = `${Math.round(temperatureFahrenheitMax)}°`;
+    }
+
+    for (let i = 0; i < temperatureMin.length; i++) {
+      let temperatureFahrenheitMin = (parseInt(temperatureMin[i].innerText) * 9) / 5 + 32;
+      temperatureMin[i].innerHTML = `${Math.round(temperatureFahrenheitMin)}°`;
+    }
+
+    isCelsius = !isCelsius;
+  }
 }
-
-let celsiusTemperature = null;
-searchedCity('Kharkiv');
-
-let fahrenheitLink = document.querySelector('#fahrenheit-link');
-fahrenheitLink.addEventListener(
-  'click',
-  displayFahrenheitTemperature
-);
 
 function displayCelsiusTemperature(event) {
   event.preventDefault();
+
+  let temperatureElement = document.querySelector('#temperature');
+  let windElement = document.querySelector('#wind');
+
+  temperatureElement.innerHTML = Math.round(celsiusTemperature);
+  windElement.innerHTML = `${Math.round(windMetric)} km/h`;
   celsiusLink.classList.add('active');
   fahrenheitLink.classList.remove('active');
-  let temperatureElement = document.querySelector('#temperature');
-  temperatureElement.innerHTML = Math.round(celsiusTemperature);
+  
+  if (!isCelsius) {
+    let temperatureMax = document.querySelectorAll('.weather-forecast-temperature-max');
+    let temperatureMin = document.querySelectorAll('.weather-forecast-temperature-min');
+
+    for (let i = 0; i < temperatureMax.length; i++) {
+      let temperatureCelsiusMax = (parseInt(temperatureMax[i].innerText) - 32) * 5/9;
+      temperatureMax[i].innerHTML = `${Math.round(temperatureCelsiusMax)}°`;
+    }
+
+    for (let i = 0; i < temperatureMin.length; i++) {
+      let temperatureCelsiusMin = (parseInt(temperatureMin[i].innerText) - 32) * 5/9;
+      temperatureMin[i].innerHTML = `${Math.round(temperatureCelsiusMin)}°`;
+    }
+    isCelsius = !isCelsius;
+  }
 }
+
+let dateElement = document.querySelector('#date');
+let currentTime = new Date();
+dateElement.innerHTML = formatDate(currentTime);
+
+let searchForm = document.querySelector('#search-form');
+searchForm.addEventListener('submit', handleSubmit);
+
+let currentLocationButton = document.querySelector('#current-location-button');
+currentLocationButton.addEventListener('click', getCurrentLocation);
+
+let fahrenheitLink = document.querySelector('#fahrenheit-link');
+fahrenheitLink.addEventListener('click', displayFahrenheitTemperature);
+
+let celsiusTemperature = null;
+let windMetric = null;
+let isCelsius = true;
 
 let celsiusLink = document.querySelector('#celcius-link');
 celsiusLink.addEventListener('click', displayCelsiusTemperature);
+
+searchedCity('Kharkiv');
+
+

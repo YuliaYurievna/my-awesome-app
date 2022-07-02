@@ -42,29 +42,21 @@ li::first-letter {
   box-shadow: 5px 5px 10px rgba(72, 72, 72, 0.343);
 }
 
-.weather-details,
-.weather-description {
-  font-size: 14px;
-}
-
-.date-now {
-  font-family: 'Noto Serif', serif;
-  font-size: 16px;
-  font-weight: 600;
-}
-
 .weather-temperature .active {
   color: rgb(33, 33, 33);
   cursor: default;
 }
 
 .date-now {
-  color: rgba(66, 19, 113, 0.701);
+  font-family: 'Noto Serif', serif;
+  color: rgba(28, 5, 52, 0.568);
   font-size: 14px;
+  font-weight: 600;
 }
 
 .weather-details-list {
   color: rgba(28, 5, 52, 0.568);
+  font-size: 14px;
 }
 
 .weather-temperature .active:hover {
@@ -91,4 +83,14 @@ li::first-letter {
 
 .weather-forecast-temperature-min {
   color: rgba(255, 255, 255, 0.613);
+}
+
+#description {
+  font-family: 'Noto Serif', serif;
+  font-size: 13.5px;
+  color: rgba(28, 5, 52, 0.568);
+}
+
+#description::first-letter {
+  text-transform: capitalize;
 }
